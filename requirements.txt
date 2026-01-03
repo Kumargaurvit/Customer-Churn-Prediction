@@ -1,0 +1,7 @@
+os
+sys
+pandas
+numpy
+streamlit
+scikit-learn
+pymongo
