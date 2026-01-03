@@ -1,0 +1,42 @@
+Age:
+  drift_status: false
+  pvalue: 0.3124130181936742
+Balance:
+  drift_status: false
+  pvalue: 0.8036157535735526
+CreditScore:
+  drift_status: false
+  pvalue: 0.8804668796407931
+CustomerId:
+  drift_status: false
+  pvalue: 0.08896273082721244
+EstimatedSalary:
+  drift_status: false
+  pvalue: 0.9978825302223162
+Exited:
+  drift_status: false
+  pvalue: 1.0
+Gender:
+  drift_status: false
+  pvalue: 1.0
+Geography:
+  drift_status: false
+  pvalue: 0.7154780155131767
+HasCrCard:
+  drift_status: false
+  pvalue: 0.9999885535352674
+IsActiveMember:
+  drift_status: false
+  pvalue: 0.9990781270210181
+NumOfProducts:
+  drift_status: false
+  pvalue: 0.999998307409455
+RowNumber:
+  drift_status: false
+  pvalue: 0.9348747411537229
+Surname:
+  drift_status: false
+  pvalue: 0.133992354338568
+Tenure:
+  drift_status: false
+  pvalue: 0.9740884479657715

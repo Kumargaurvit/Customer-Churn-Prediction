@@ -1,0 +1,18 @@
+[2026-01-03 23:33:55,415] 76 - root - INFO - Initiating Data Ingestion
+[2026-01-03 23:33:55,416] 27 - root - INFO - Extracting Data from MongoDB
+[2026-01-03 23:33:57,043] 43 - root - INFO - Exporting Data into Feature Store
+[2026-01-03 23:33:57,081] 55 - root - INFO - Splitting Data as Train and Test Set
+[2026-01-03 23:33:57,083] 63 - root - INFO - Exporting Train and Test files
+[2026-01-03 23:33:57,120] 86 - root - INFO - Data Ingestion Complete
+[2026-01-03 23:33:57,124] 72 - root - INFO - Initiating Data Validation
+[2026-01-03 23:33:57,158] 80 - root - INFO - Validating Number of Columns
+[2026-01-03 23:33:57,158] 32 - root - INFO - Required Number of Columns : 14
+[2026-01-03 23:33:57,158] 33 - root - INFO - Number of DataFrame Columns : 14
+[2026-01-03 23:33:57,158] 32 - root - INFO - Required Number of Columns : 14
+[2026-01-03 23:33:57,158] 33 - root - INFO - Number of DataFrame Columns : 14
+[2026-01-03 23:33:57,158] 89 - root - INFO - Column Validation Status : True
+[2026-01-03 23:33:57,158] 91 - root - INFO - Checking if Numerical Columns Exist
+[2026-01-03 23:33:57,159] 102 - root - INFO - Checking for Data Drift
+[2026-01-03 23:33:57,228] 106 - root - INFO - Data Drift Status : True
+[2026-01-03 23:33:57,228] 108 - root - INFO - Exporting Valid Train and Test Data
+[2026-01-03 23:33:57,260] 125 - root - INFO - Data Validation Complete

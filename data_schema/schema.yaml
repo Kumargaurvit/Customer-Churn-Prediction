@@ -1,0 +1,50 @@
+columns:
+  RowNumber:
+    type: int
+
+  CustomerId:
+    type: int
+
+  Surname:
+    type: category
+
+  CreditScore:
+    type: int
+
+  Geography:
+    type: category
+
+  Gender:
+    type: category
+
+  Age:
+    type: int
+
+  Tenure:
+    type: int
+
+  Balance:
+    type: float
+
+  NumOfProducts:
+    type: int
+
+  HasCrCard:
+    type: int
+
+  IsActiveMember:
+    type: int
+
+  EstimatedSalary:
+    type: float
+
+  Exited:
+    type: int
+
+numerical_columns:
+  - CreditScore
+  - Age
+  - Tenure
+  - Balance
+  - NumOfProducts
+  - EstimatedSalary
