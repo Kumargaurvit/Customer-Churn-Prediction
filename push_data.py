@@ -6,8 +6,7 @@ import pandas as pd
 from dotenv import load_dotenv
 
 from src.exception.exception import CustomerChurnException
-from src.logging.logger import logging
-from src.entity.config_entity import DATABASE_NAME, COLLECTION_NAME
+from constant import training_pipeline
 
 load_dotenv()
 
@@ -51,5 +50,7 @@ if __name__ == "__main__":
     churnobj = CustomerDataExtract()
     records = churnobj.csv_to_json_converter(file_path=file_path)
     print(records)
-    no_of_records = churnobj.insert_data_mongodb(records=records,database=DATABASE_NAME,collection=COLLECTION_NAME)
+    no_of_records = churnobj.insert_data_mongodb(
+        records=records,database=training_pipeline.DATABASE_NAME,collection=training_pipeline.COLLECTION_NAME
+    )
     print(no_of_records)
