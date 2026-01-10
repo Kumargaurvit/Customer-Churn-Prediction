@@ -1,4 +1,5 @@
 import os
+import numpy as np
 
 '''
 COMMON VARIABLES FOR TRAINING PIPELINE
@@ -7,9 +8,11 @@ PIPELINE_NAME: str = "CustomerChurn"
 ARTIFACT_DIR: str = "Artifacts"
 FILE_NAME: str = "Churn_Modelling.csv"
 TARGET_COLUMN: str = "Exited"
+COLUMNS_TO_REMOVE: list = ["RowNumber","CustomerId","Surname"]
 
 TRAIN_FILE_NAME: str = "train.csv"
 TEST_FILE_NAME: str = "test.csv"
+PREPROCESSOR_OBJECT_NAME: str = "preprocessor.pkl"
 
 SCHEMA_FILE_PATH: str = os.path.join('data_schema','schema.yaml')
 
@@ -37,3 +40,15 @@ DATA_VALIDATION_VALID_DIR: str = "validated"
 DATA_VALIDATION_INVALID_DIR: str = "invalid"
 DATA_VALIDATION_DRIFT_REPORT_DIR: str = "drift_report"
 DATA_VALIDATION_DRIFT_REPORT_FILE_NAME: str = "report.yaml"
+
+'''
+DATA TRANSFORMATION RELATED VARIABLES
+'''
+DATA_TRANSFORMATION_DIR_NAME: str = "data_transformation"
+DATA_TRANSFORMATION_TRANSFORMED_DIR_NAME: str = "transformed"
+DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR_NAME: str = "transformed_object"
+DATA_TRANSFORMATION_IMPUTER_PARAMS: dict = {
+    "missing_values" : np.nan,
+    "n_neighbors" : 3,
+    "weights" : "uniform"
+}

@@ -13,7 +13,7 @@ class TrainingPipelineConfig:
         self.model_dir: str = os.path.join('final_models')
 
 class DataIngestionConfig:
-    def __init__(self,training_pipeline_config: TrainingPipelineConfig):
+    def __init__(self, training_pipeline_config: TrainingPipelineConfig):
         self.data_ingestion_dir: str = os.path.join(
             training_pipeline_config.artifact_dir, training_pipeline.DATA_INGESTION_DIR_NAME
         )
@@ -57,4 +57,22 @@ class DataValidationConfig:
         self.drift_report_file_path: str = os.path.join(
             self.data_validation_dir, training_pipeline.DATA_VALIDATION_DRIFT_REPORT_DIR,
             training_pipeline.DATA_VALIDATION_DRIFT_REPORT_FILE_NAME
+        )
+
+class DataTransformationConfig:
+    def __init__(self, training_pipeline_config: TrainingPipelineConfig):
+        self.data_transformation_dir = os.path.join(
+            training_pipeline_config.artifact_dir, training_pipeline.DATA_TRANSFORMATION_DIR_NAME
+        )
+        self.transformed_train_file = os.path.join(
+            self.data_transformation_dir, training_pipeline.DATA_TRANSFORMATION_TRANSFORMED_DIR_NAME,
+            training_pipeline.TRAIN_FILE_NAME.replace('csv','npy')
+        )
+        self.transformed_test_file = os.path.join(
+            self.data_transformation_dir, training_pipeline.DATA_TRANSFORMATION_TRANSFORMED_DIR_NAME,
+            training_pipeline.TEST_FILE_NAME.replace('csv','.npy')
+        )
+        self.preprocessor_object = os.path.join(
+            self.data_transformation_dir, training_pipeline.DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR_NAME,
+            training_pipeline.PREPROCESSOR_OBJECT_NAME
         )
