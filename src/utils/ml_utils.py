@@ -28,20 +28,22 @@ def preprocess(data: pd.DataFrame)->float:
     try:
         training_pipeline_config = TrainingPipelineConfig()
         model_trainer_config = ModelTrainerConfig(training_pipeline_config)
+
         ohe = load_object(model_trainer_config.encoder_file_path)
-        preprocessor = load_object(model_trainer_config.preprocessor_file_path)
-
-        for column in data.columns:
-            if data[column].dtype == 'O':
-                column_encoded = ohe.transform(data[[column]]).toarray()
-
-                column_encoded = pd.DataFrame(column_encoded, columns=ohe.get_feature_names_out(column))
-
-                data = pd.concat([data,column_encoded],axis=1)
-        
-        data = preprocessor.transform(data)
-
+        knn = load_object(model_trainer_config.preprocessor_file_path)
         model = load_object(model_trainer_config.model_file_path)
+
+        cat_cols = list(ohe.feature_names_in_)
+
+        column_encoded = ohe.transform(data[cat_cols]).toarray()
+
+        column_encoded = pd.DataFrame(column_encoded, columns=ohe.get_feature_names_out(), index=data.index)
+
+        data.drop(cat_cols, axis=1, inplace=True)
+
+        data = pd.concat([data,column_encoded],axis=1)
+        
+        data = knn.transform(data)
 
         return data, model
     except Exception as e:

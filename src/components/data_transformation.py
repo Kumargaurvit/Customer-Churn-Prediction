@@ -27,21 +27,22 @@ class DataTransformation:
     
     def encode_columns(self, train_data: pd.DataFrame, test_data: pd.DataFrame)->pd.DataFrame:
         try:
-            for column in train_data.columns:
-                if train_data[column].dtype == 'O':
-                    ohe = OneHotEncoder(handle_unknown='ignore')
-                    train_column_encoded = ohe.fit_transform(train_data[[column]]).toarray()
-                    test_column_encoded = ohe.transform(test_data[[column]]).toarray()
+            cat_cols = train_data.select_dtypes(include=["object"]).columns.to_list()
+            ohe = OneHotEncoder(handle_unknown='ignore')
+            train_column_encoded = ohe.fit_transform(train_data[cat_cols]).toarray()
+            test_column_encoded = ohe.transform(test_data[cat_cols]).toarray()
 
-                    train_column_encoded = pd.DataFrame(train_column_encoded, columns=ohe.get_feature_names_out())
-                    test_column_encoded = pd.DataFrame(test_column_encoded, columns=ohe.get_feature_names_out())
+            ohe.feature_names_in_ = cat_cols
 
-                    train_data.drop(column,axis=1,inplace=True)
-                    test_data.drop(column,axis=1,inplace=True)
+            train_column_encoded = pd.DataFrame(train_column_encoded, columns=ohe.get_feature_names_out())
+            test_column_encoded = pd.DataFrame(test_column_encoded, columns=ohe.get_feature_names_out())
 
-                    train_data = pd.concat([train_data, train_column_encoded],axis=1)
-                    test_data = pd.concat([test_data, test_column_encoded],axis=1)
-            
+            train_data.drop(cat_cols,axis=1,inplace=True)
+            test_data.drop(cat_cols,axis=1,inplace=True)
+
+            train_data = pd.concat([train_data, train_column_encoded],axis=1)
+            test_data = pd.concat([test_data, test_column_encoded],axis=1)
+    
             return train_data, test_data, ohe
         except Exception as e:
             raise CustomerChurnException(e,sys)

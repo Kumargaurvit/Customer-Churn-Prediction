@@ -50,7 +50,7 @@ class ModelTrainer:
     def train_models(self):
         try:
             models = {
-                "Logistic Regression": LogisticRegression(verbose=1),
+                "Logistic Regression": LogisticRegression(verbose=1, max_iter=10000),
                 "Random Forest Classifier" : RandomForestClassifier(
                     class_weight="balanced", n_estimators=200, max_depth=8, n_jobs=-1, verbose=1
                 ),

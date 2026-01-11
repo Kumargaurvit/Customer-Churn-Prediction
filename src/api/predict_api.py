@@ -26,11 +26,11 @@ def home():
 @app.post('/predict')
 def churn_prediction(data: UserInput):
     try:
-        input_data = pd.DataFrame([data])
+        input_data = pd.DataFrame([data.model_dump()])
 
         test_data, model = preprocess(input_data)
 
-        prediction = model.predict_proba(test_data)[0]
+        prediction = model.predict_proba(test_data)[0][1]
 
         return JSONResponse(status_code=200, content={'predicted' : prediction})
     except Exception as e:

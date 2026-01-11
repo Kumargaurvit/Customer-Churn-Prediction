@@ -3,7 +3,7 @@ from typing import Literal, Annotated
 
 class UserInput(BaseModel):
     CreditScore: Annotated[int, Field(..., description="Credit Score", ge=0, le=900)]
-    Country: Annotated[Literal["France","Spain","Germany"], Field(..., description="Country")]
+    Geography: Annotated[Literal["France","Spain","Germany"], Field(..., description="Country")]
     Gender: Annotated[Literal["Male","Female"], Field(..., description="Gender")]
     Age: Annotated[int, Field(..., description="Age", ge=0, le=100)]
     Tenure: Annotated[int, Field(..., description="Tenure", ge=0, le=10)]
