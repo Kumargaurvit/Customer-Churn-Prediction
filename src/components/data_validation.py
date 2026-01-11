@@ -4,7 +4,7 @@ from src.logging.logger import logging
 from src.entity.config_entity import DataValidationConfig
 from src.entity.artifact_entity import DataValidationArtifact, DataIngestionArtifact
 from src.utils.main_utils import read_yaml_file, write_yaml_file
-from src.constant.training_pipeline import SCHEMA_FILE_PATH
+from src.constant.training import SCHEMA_FILE_PATH
 
 import os
 import sys

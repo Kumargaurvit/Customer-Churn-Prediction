@@ -6,6 +6,7 @@ COMMON VARIABLES FOR TRAINING PIPELINE
 '''
 PIPELINE_NAME: str = "CustomerChurn"
 ARTIFACT_DIR: str = "Artifacts"
+FINAL_MODEL_DIR: str = "final_models"
 FILE_NAME: str = "Churn_Modelling.csv"
 TARGET_COLUMN: str = "Exited"
 COLUMNS_TO_REMOVE: list = ["RowNumber","CustomerId","Surname"]
@@ -13,6 +14,9 @@ COLUMNS_TO_REMOVE: list = ["RowNumber","CustomerId","Surname"]
 TRAIN_FILE_NAME: str = "train.csv"
 TEST_FILE_NAME: str = "test.csv"
 PREPROCESSOR_OBJECT_NAME: str = "preprocessor.pkl"
+MODEL_FILE_NAME: str = "churn_model.pkl"
+ENCODER_OBJECT_NAME: str = "onehotencoder.pkl"
+SCALER_OBJECT_NAME: str = "scaler.pkl"
 
 SCHEMA_FILE_PATH: str = os.path.join('data_schema','schema.yaml')
 

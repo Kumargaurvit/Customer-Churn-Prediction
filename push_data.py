@@ -6,7 +6,7 @@ import pandas as pd
 from dotenv import load_dotenv
 
 from src.exception.exception import CustomerChurnException
-from constant import training_pipeline
+from src.constant import training
 
 load_dotenv()
 
@@ -51,6 +51,6 @@ if __name__ == "__main__":
     records = churnobj.csv_to_json_converter(file_path=file_path)
     print(records)
     no_of_records = churnobj.insert_data_mongodb(
-        records=records,database=training_pipeline.DATABASE_NAME,collection=training_pipeline.COLLECTION_NAME
+        records=records,database=training.DATABASE_NAME,collection=training.COLLECTION_NAME
     )
     print(no_of_records)

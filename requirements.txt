@@ -6,3 +6,7 @@ pymongo
 pymongo[srv]==3.12
 dotenv
 pyyaml
+imblearn
+xgboost
+fastapi
+uvicorn

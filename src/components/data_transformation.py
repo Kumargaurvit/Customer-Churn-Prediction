@@ -10,7 +10,7 @@ from src.exception.exception import CustomerChurnException
 from src.logging.logger import logging
 from src.entity.artifact_entity import DataValidationArtifact, DataTransformationArtifact
 from src.entity.config_entity import DataTransformationConfig
-from src.constant.training_pipeline import TARGET_COLUMN, DATA_TRANSFORMATION_IMPUTER_PARAMS, COLUMNS_TO_REMOVE
+from src.constant.training import TARGET_COLUMN, DATA_TRANSFORMATION_IMPUTER_PARAMS, COLUMNS_TO_REMOVE
 from src.utils.main_utils import save_object, save_numpy_array_data
 
 class DataTransformation:
@@ -33,8 +33,8 @@ class DataTransformation:
                     train_column_encoded = ohe.fit_transform(train_data[[column]]).toarray()
                     test_column_encoded = ohe.transform(test_data[[column]]).toarray()
 
-                    train_column_encoded = pd.DataFrame(train_column_encoded, columns=ohe.get_feature_names_out([column]))
-                    test_column_encoded = pd.DataFrame(test_column_encoded, columns=ohe.get_feature_names_out([column]))
+                    train_column_encoded = pd.DataFrame(train_column_encoded, columns=ohe.get_feature_names_out())
+                    test_column_encoded = pd.DataFrame(test_column_encoded, columns=ohe.get_feature_names_out())
 
                     train_data.drop(column,axis=1,inplace=True)
                     test_data.drop(column,axis=1,inplace=True)
@@ -42,7 +42,7 @@ class DataTransformation:
                     train_data = pd.concat([train_data, train_column_encoded],axis=1)
                     test_data = pd.concat([test_data, test_column_encoded],axis=1)
             
-            return train_data, test_data
+            return train_data, test_data, ohe
         except Exception as e:
             raise CustomerChurnException(e,sys)
 
@@ -73,7 +73,7 @@ class DataTransformation:
             target_test_data = test_data[TARGET_COLUMN]
 
             logging.info("Encoding Categorical Features using OneHotEncoder")
-            input_train_data, input_test_data = self.encode_columns(input_train_data, input_test_data) 
+            input_train_data, input_test_data, ohe = self.encode_columns(input_train_data, input_test_data) 
 
             preprocessor = self.preprocessor_object()
 
@@ -84,23 +84,27 @@ class DataTransformation:
             transformed_input_test_data = preprocessor_object.transform(input_test_data)
 
             logging.info("Concating Transformed Input and Target Data as Numpy Arrays")
-            final_train_data = np.c_[transformed_input_train_data, np.array(target_train_data)]
-            final_test_data = np.c_[transformed_input_test_data, np.array(target_test_data)]
+            train_data = np.c_[transformed_input_train_data, np.array(target_train_data)]
+            test_data = np.c_[transformed_input_test_data, np.array(target_test_data)]
 
-            logging.info("Exporting Train and Test Data as Numpy Arrays")
-            save_numpy_array_data(final_train_data, self.data_transformation_config.transformed_train_file)
-            save_numpy_array_data(final_test_data, self.data_transformation_config.transformed_test_file)
+            logging.info('Exporting Train and Test Numpy Arrays')
+            save_numpy_array_data(train_data, self.data_transformation_config.transformed_train_file)
+            save_numpy_array_data(test_data, self.data_transformation_config.transformed_test_file)
 
-            logging.info("Exporting KNNImputer Object as Pickle file")
+            logging.info('Exporting KNNImputer Object as Pickle File')
             save_object(preprocessor_object, self.data_transformation_config.preprocessor_object)
+
+            logging.info('Exporting OneHotEncoder Object as Pickle File')
+            save_object(ohe, self.data_transformation_config.encoder_object)
 
             data_transformation_artifact = DataTransformationArtifact(
                 transformed_train_file_path=self.data_transformation_config.transformed_train_file,
                 transformed_test_file_path=self.data_transformation_config.transformed_test_file,
-                preprocessor_object_file_path=self.data_transformation_config.preprocessor_object
+                preprocessor_object_file_path=self.data_transformation_config.preprocessor_object,
+                encoder_object_file_path=self.data_transformation_config.encoder_object
             )
 
-            logging.info("Data Transformation Complete")
+            logging.info('Data Transformation Completed')
             return data_transformation_artifact
         except Exception as e:
             raise CustomerChurnException(e,sys)
