@@ -8,7 +8,7 @@ COPY . /app
 WORKDIR /app
 
 # Install all requirements
-RUN pip install -r requirements.txt
+RUN RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose port 8000 and 8501 for fastapi and streamlit
 EXPOSE 8000
