@@ -105,7 +105,7 @@ This project implements a comprehensive customer churn prediction system designe
 
 2. **Run the container**
    ```bash
-   docker-compose up
+   docker run -p 8000:8000 -p 8501:8501 customer-churn-prediction
    ```
 
 3. **Access the application**
