@@ -1,156 +1,125 @@
-# Customer Churn Prediction
+# 🎯 Customer Churn Prediction
 
-A production-ready, end-to-end machine learning solution for predicting customer churn with automated MLOps pipeline, scalable architecture, and seamless cloud deployment.
+## 📌 Project Overview
 
-## 🚀 Project Overview
+The **Customer Churn Prediction** is a Machine Learning web application that predicts customer churn using behavioral, demographic, and transactional data to support proactive customer retention strategies.
 
-This project implements a comprehensive customer churn prediction system designed for real-world production environments. It features a complete ML lifecycle automation, from data ingestion to model deployment, with a focus on scalability, maintainability, and ease of deployment.
+The system automates the **end-to-end ML pipeline**, including:
+- Data ingestion from MongoDB
+- Data validation and drift detection
+- Data transformation
+- Model training and evaluation
+- Prediction through a Streamlit + FastAPI integration based web interface
 
-## ✨ Key Features
-
-### 🔄 End-to-End ML Pipeline
-- **Automated ML Lifecycle**: Complete automation of data ingestion, preprocessing, feature engineering, model training, and evaluation
-- **Modular Architecture**: Well-structured pipeline components for easy maintenance and updates
-- **Reproducible Results**: Consistent model training and evaluation across different environments
-
-### 🌐 Interactive User Interface
-- **FastAPI Backend**: High-performance API for model predictions and training triggers
-- **Streamlit Frontend**: Intuitive web interface for user interaction and visualization
-- **Real-time Predictions**: Instant churn predictions with comprehensive insights
-- **Asynchronous Processing**: Non-blocking operations for improved user experience
-
-### 🐳 Containerization
-- **Docker Integration**: Fully containerized application for consistent deployment
-- **Multi-stage Builds**: Optimized Docker images for production efficiency
-- **Easy Local Testing**: Spin up the entire application with a single command
-- **Environment Isolation**: No dependency conflicts across different systems
-
-### ☁️ AWS Cloud Integration
-- **S3 Bucket Sync**: Automated data and model artifact syncing to AWS S3
-- **ECR Integration**: Docker images pushed to Amazon Elastic Container Registry
-- **EC2 Deployment**: Application hosted on AWS EC2 instances
-- **Scalable Infrastructure**: Cloud-native architecture ready for horizontal scaling
-
-### 🔁 CI/CD Pipeline
-- **GitHub Actions Workflow**: Automated testing, building, and deployment
-- **Self-Hosted Runner**: Dedicated EC2-based runner for secure deployments
-- **Continuous Integration**: Automated testing on every code push
-- **Continuous Deployment**: Seamless deployment to production environment
-
-## 🏗️ Architecture
-
-```
-┌─────────────────┐
-│   Streamlit UI  │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐      ┌──────────────────┐
-│   FastAPI       │◄────►│  ML Pipeline     │
-│   Backend       │      │  Components      │
-└────────┬────────┘      └────────┬─────────┘
-         │                        │
-         ▼                        ▼
-┌─────────────────┐      ┌──────────────────┐
-│   Docker        │      │  AWS S3          │
-│   Container     │      │  (Data/Models)   │
-└────────┬────────┘      └──────────────────┘
-         │
-         ▼
-┌─────────────────┐
-│   AWS ECR/EC2   │
-└─────────────────┘
-```
-
-## 📋 Prerequisites
-
-- Python 3.8+
-- Docker and Docker Compose
-- AWS Account (for cloud deployment)
-- GitHub Account (for CI/CD)
-
-## 🛠️ Installation
-
-### Local Setup
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/customer-churn-prediction.git
-   cd customer-churn-prediction
-   ```
-
-2. **Create virtual environment**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   # Edit .env with your configurations
-   ```
-
-### Docker Setup
-
-1. **Build the Docker image**
-   ```bash
-   docker build -t customer-churn-prediction .
-   ```
-
-2. **Run the container**
-   ```bash
-   docker run -p 8000:8000 -p 8501:8501 customer-churn-prediction
-   ```
-
-3. **Access the application**
-   - Streamlit UI: http://localhost:8501
-   - FastAPI Docs: http://localhost:8000/docs
-
-## 🚀 Usage
-
-### Training the Model
-
-```python
-# Via API
-curl -X POST "http://localhost:8000/train" \
-     -H "Content-Type: application/json"
-
-# Via Streamlit UI
-# Navigate to the Training page and click "Start Training"
-```
-
-### Making Predictions
-
-```python
-# Via API
-curl -X POST "http://localhost:8000/predict" \
-     -H "Content-Type: application/json" \
-     -d '{"feature1": value1, "feature2": value2, ...}'
-
-# Via Streamlit UI
-# Navigate to the Prediction page and input customer data
-```
-
-## ☁️ AWS Deployment
-
-### Prerequisites
-- AWS CLI configured
-- IAM user with appropriate permissions
-- S3 bucket created
-- ECR repository created
-
-## 📞 Contact
-
-For questions, suggestions, or issues, please open an issue on GitHub or contact:
-- Email: kumargaurvit@example.com
-- LinkedIn: (https://linkedin.com/in/gaurvitkumar)
+It is built with **production-grade architecture**, following modular design, logging, exception handling, and CI/CD readiness.
 
 ---
 
-**Note**: This is a production-ready system designed for scalability and reliability. For production deployment, ensure proper security measures, monitoring, and testing are in place.
+## 🎯 Problem Statement
+
+Customer churn poses a significant challenge for businesses, as losing existing customers directly impacts revenue and growth.
+This project aims to classify customers as likely to churn or remain retained by analyzing historical customer data and behavioral patterns, helping organizations take proactive retention measures.
+
+---
+
+## 🧠 Solution Approach
+
+1. **Dataset**
+   - Customer Churn Data stored in MongoDB
+
+2. **Machine Learning Pipeline**
+   - Data Ingestion
+   - Data Validation (Schema & Drift Detection)
+   - Data Transformation (Preprocessing & Imputation)
+   - Model Training (Classification models)
+   - Model Evaluation
+   - Pydantic model based input for input verification
+   - Prediction & Output generation
+
+3. **Web API**
+   - FastAPI-based REST service
+   - Streamlit Web App for easy User Interaction and Manual feature input
+
+---
+
+## ⚙️ Tech Stack Used
+
+### 🔹 Programming & Frameworks
+- Python 3.13
+- FastAPI
+- Uvicorn
+- Streamlit
+- Pydantic
+
+### 🔹 Machine Learning
+- Scikit-learn
+- NumPy
+- Pandas
+- Pickle
+
+### 🔹 Database
+- MongoDB Atlas
+- PyMongo
+
+### 🔹 DevOps & MLOps
+- GitHub Actions
+- Docker-ready architecture
+- MLFlow and DAGsHub
+- Data Drift Detection
+- Logging & Exception Handling
+
+### 🔹 Cloud Deployment
+- Amazon S3 Bucket (Artifact and Model Storage)
+- Amazon ECR (Docker Image Repository)
+- Amazon EC2 Instance (Web App Deployment)
+
+---
+
+## 🗄 MongoDB Atlas Setup
+
+1. Create a MongoDB Atlas account:  
+   https://www.mongodb.com/cloud/atlas
+
+2. Create a new cluster (Free Tier M0 works)
+
+3. Create a database and collection:
+   - Database name: `your_db_name`
+   - Collection name: `your_collection_name`
+
+4. Add your IP address to **Network Access**
+
+5. Create a database user and note:
+   - Username
+   - Password
+
+---
+
+## 🔐 Environment Variables
+
+Create a `.env` file in the root directory and add:
+
+```env
+MONGO_DB_URL=mongodb+srv://<username>:<password>@cluster0.mongodb.net/<db_name>?retryWrites=true&w=majority
+```
+
+---
+
+## ⚙️ Installation
+
+```bash
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+## ▶️ Run the FastAPI Application
+```bash
+python app.py
+```
+
+## ▶️ Run the Training Pipeline Locally
+```bash
+python main.py
+```
