@@ -12,11 +12,14 @@ from src.entity.config_entity import (
     DataTransformationConfig,
     ModelTrainerConfig
 )
+from src.constant.training import AWS_BUCKET_NAME
+from src.cloud.aws_sync import AWSSync
 
 class TrainingPipeline:
-    def __init__(self, training_pipeline_config = TrainingPipelineConfig):
+    def __init__(self):
         try:
-            self.training_pipeline_config = training_pipeline_config
+            self.training_pipeline_config = TrainingPipelineConfig()
+            self.aws_sync = AWSSync()
         except Exception as e:
             raise CustomerChurnException(e,sys)
 
@@ -65,9 +68,27 @@ class TrainingPipeline:
         except Exception as e:
             raise CustomerChurnException(e,sys)
         
+    def sync_artifact_to_aws_s3(self):
+        try:
+            aws_bucket_url = f"s3://{AWS_BUCKET_NAME}/final_models/{self.training_pipeline_config.timestamp}"
+            self.aws_sync.sync_to_s3(folder=self.training_pipeline_config.artifact_dir, aws_bucket_url=aws_bucket_url)
+        except Exception as e:
+            raise CustomerChurnException(e,sys)
+    
+    def sync_model_dir_to_aws_s3(self):
+        try:
+            aws_bucket_url = f"s3://{AWS_BUCKET_NAME}/final_models/{self.training_pipeline_config.timestamp}"
+            self.aws_sync.sync_to_s3(folder=self.training_pipeline_config.model_dir, aws_bucket_url=aws_bucket_url)
+        except Exception as e:
+            raise CustomerChurnException(e,sys)
+
     def initiate_training_pipeline(self):
         try:
             model_trainer_artifact = self.start_model_trainer()
+
+            self.sync_artifact_to_aws_s3()
+            self.sync_model_dir_to_aws_s3()
+
             return model_trainer_artifact
         except Exception as e:
             raise CustomerChurnException(e,sys)

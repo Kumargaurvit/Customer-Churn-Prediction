@@ -56,3 +56,8 @@ DATA_TRANSFORMATION_IMPUTER_PARAMS: dict = {
     "n_neighbors" : 3,
     "weights" : "uniform"
 }
+
+"""
+AMAZON WEB SERVICES RELATED VARIABLES
+"""
+AWS_BUCKET_NAME = "gaurvitcustomerchurn"
