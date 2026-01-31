@@ -27,29 +27,30 @@ try:
     EstimatedSalary = st.number_input("What is your estimated salary? (Monthly)", min_value=0.0, value=0.0, step=0.01, format="%.2f")
 
     if st.button("Predict Customer Churn"):
-        data = {
-        "CreditScore" : CreditScore,
-        "Geography" : Geography,
-        "Gender" : Gender,
-        "Age" : Age,
-        "Tenure" : Tenure,
-        "Balance" : Balance,
-        "NumOfProducts" : NumOfProducts,
-        "HasCrCard" : HasCrCard,
-        "IsActiveMember" : IsActiveMember,
-        "EstimatedSalary" : EstimatedSalary
-        }
+        with st.spinner("Prediction in progress..."):
+            data = {
+            "CreditScore" : CreditScore,
+            "Geography" : Geography,
+            "Gender" : Gender,
+            "Age" : Age,
+            "Tenure" : Tenure,
+            "Balance" : Balance,
+            "NumOfProducts" : NumOfProducts,
+            "HasCrCard" : HasCrCard,
+            "IsActiveMember" : IsActiveMember,
+            "EstimatedSalary" : EstimatedSalary
+            }
 
-        try:
-            api_response = requests.post(CHURN_PREDICTION_API, json=data)
-            if api_response.status_code == 200:
-                result = api_response.json()
+            try:
+                api_response = requests.post(CHURN_PREDICTION_API, json=data)
+                if api_response.status_code == 200:
+                    result = api_response.json()
                 if result['predicted'] >= 0.5:
                     st.error("The Customer is likely to churn")
                 else:
                     st.success("The Customer is not likely to churn")
-        except Exception as e:
-            raise CustomerChurnException(e,sys)
+            except Exception as e:
+                raise CustomerChurnException(e,sys)
 
 except Exception as e:
     raise CustomerChurnException(e,sys)
