@@ -1,7 +1,5 @@
 venv
 .env
-test.ipynb
-test_mongodb.py
 Artifacts
 Logs
-main.py
+test_files
