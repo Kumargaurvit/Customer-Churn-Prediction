@@ -6,6 +6,8 @@ import sys
 
 from src.pydantic_model.pydantinc_model import UserInput
 from src.exception.exception import CustomerChurnException
+from src.pipeline.training_pipeline import TrainingPipeline
+from src.entity.config_entity import TrainingPipelineConfig
 from src.utils.ml_utils import preprocess
 
 app = FastAPI()
@@ -22,6 +24,17 @@ app.add_middleware(
 @app.get('/')
 def home():
     return "Customer Churn Predicition API"
+
+@app.get('/train')
+def model_train():
+    try:
+        training_pipeline_config = TrainingPipelineConfig()
+        training_pipeline = TrainingPipeline(training_pipeline_config=training_pipeline_config)
+        training_pipeline.initiate_training_pipeline()
+
+        return JSONResponse(status_code=200, content="Training Successfully Completed!")
+    except Exception as e:
+        return CustomerChurnException(e,sys)
 
 @app.post('/predict')
 def churn_prediction(data: UserInput):
